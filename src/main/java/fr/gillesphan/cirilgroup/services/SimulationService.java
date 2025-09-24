@@ -77,6 +77,7 @@ public class SimulationService {
                         System.out.print("🌲 ");
                     }
                 } catch (IllegalStateException e) {
+                    System.err.println(e.getMessage());
                     System.out.print("⚠️ ");
                 }
 

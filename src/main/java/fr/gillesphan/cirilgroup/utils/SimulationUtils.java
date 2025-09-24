@@ -59,7 +59,7 @@ public final class SimulationUtils {
             throw new IllegalStateException("No history available");
         }
         if (history.size() < 2) {
-            throw new IllegalStateException("History too short to determine ash");
+            return false;
         }
 
         // check all states of the forest and check if one of them as already burning at
