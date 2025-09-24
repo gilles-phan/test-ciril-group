@@ -1,9 +1,11 @@
-package fr.gillesphan.cirilgroup.test.cg;
+package fr.gillesphan.cirilgroup;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import fr.gillesphan.cirilgroup.test.cg.config.AppConfiguration;
+import fr.gillesphan.cirilgroup.config.AppConfiguration;
+import fr.gillesphan.cirilgroup.services.SimulationService;
+import fr.gillesphan.cirilgroup.utils.SimulationUtils;
 
 @SpringBootApplication
 public class TestCirilGroupApplication implements CommandLineRunner {
@@ -33,10 +35,12 @@ public class TestCirilGroupApplication implements CommandLineRunner {
             throw new IllegalArgumentException("Contagion rate must be between 0 and 1.");
         }
 
-        System.out.println("Width: " + config.getWidth());
-        System.out.println("Height: " + config.getHeight());
-        System.out.println("Rate: " + config.getContagionRate());
-        config.getStartFirePositions()
-                .forEach(pos -> System.out.println("Fire start at x=" + pos.getX() + ", y=" + pos.getY()));
+        SimulationService simulationService = new SimulationService(config);
+        simulationService.drawForest();
+        while (simulationService.isStillBurningTrees()) {
+            simulationService.nextStep();
+            simulationService.drawForest();
+        }
+
     }
 }

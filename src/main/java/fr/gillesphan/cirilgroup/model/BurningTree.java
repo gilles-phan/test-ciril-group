@@ -1,10 +1,10 @@
-package fr.gillesphan.cirilgroup.test.cg.config;
+package fr.gillesphan.cirilgroup.model;
 
-public class FirePosition {
+public class BurningTree {
     private int x;
     private int y;
 
-    public FirePosition(int x, int y) {
+    public BurningTree(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -24,5 +24,4 @@ public class FirePosition {
     public void setY(int y) {
         this.y = y;
     }
-
 }

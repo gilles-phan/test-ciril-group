@@ -1,4 +1,4 @@
-package fr.gillesphan.cirilgroup.test.cg.config;
+package fr.gillesphan.cirilgroup.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +17,18 @@ public class AppConfiguration {
 
     private int width;
     private int height;
+    /**
+     * To delete ?
+     * 
+     * @deprecated not used
+     */
     private List<FirePosition> startFirePositions;
     private double contagionRate;
 
     public AppConfiguration() {
     }
 
-    public AppConfiguration(int width, int height, List<FirePosition> startFirePositions, int contagionRate) {
+    public AppConfiguration(int width, int height, List<FirePosition> startFirePositions, double contagionRate) {
         this.width = width;
         this.height = height;
         this.startFirePositions = startFirePositions;
