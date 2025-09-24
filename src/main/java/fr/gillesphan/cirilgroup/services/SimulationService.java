@@ -83,6 +83,7 @@ public class SimulationService {
         // 3 - for each burning tree, try to set to burning the 4 adjacent trees if not
         // ash
         // TODO : à terminer après avoir manger
+
         Tree[] newBurningTrees = new Tree[0];
 
         // 4 - set all currently burning trees to ash
