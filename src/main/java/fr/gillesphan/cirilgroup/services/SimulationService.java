@@ -14,10 +14,12 @@ public class SimulationService {
     private ForestStates simulation;
     private int width;
     private int height;
+    private double contagionRate;
 
     public SimulationService(AppConfiguration config) {
         this.width = config.getWidth();
         this.height = config.getHeight();
+        this.contagionRate = config.getContagionRate();
 
         Tree[] initialBurningTrees = config.getStartFirePositions().stream()
                 .map(pos -> new Tree(pos.getX(), pos.getY()))
@@ -50,10 +52,20 @@ public class SimulationService {
         this.height = height;
     }
 
+    public double getContagionRate() {
+        return contagionRate;
+    }
+
+    public void setContagionRate(double contagionRate) {
+        this.contagionRate = contagionRate;
+    }
+
     /**
      * Draw the forest in the console.
      */
     public void drawForest() {
+        System.out.println(
+                "Forest generation: #" + (simulation.getBurningTreesHistory().size() - 1));
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
                 try {
@@ -73,6 +85,9 @@ public class SimulationService {
         }
     }
 
+    /**
+     * Generate the next step of the simulation.
+     */
     public void nextStep() {
         // 1 - get all ash
         List<Tree> ash = getAllBurnedTrees(simulation);
@@ -80,14 +95,79 @@ public class SimulationService {
         // 2 - get currently burning trees
         Tree[] currentlyBurningTrees = simulation.getCurrentBurningTrees();
 
-        // 3 - for each burning tree, try to set to burning the 4 adjacent trees if not
-        // ash
-        // TODO : à terminer après avoir manger
+        // 3 - for each burning tree, try to ignite its neighboors
+        List<Tree> newBurningTrees = new ArrayList<Tree>();
+        for (Tree burningTree : currentlyBurningTrees) {
+            checkNeighboors(burningTree, ash, newBurningTrees);
+        }
+        Tree[] newBurningTreesArray = new Tree[newBurningTrees.size()];
+        newBurningTreesArray = newBurningTrees.toArray(newBurningTreesArray);
 
-        Tree[] newBurningTrees = new Tree[0];
+        // 4 - transform all currently burning trees to ash
+        simulation.addBurningTreesToHistory(newBurningTreesArray);
+    }
 
-        // 4 - set all currently burning trees to ash
-        simulation.addBurningTreesToHistory(newBurningTrees);
+    /**
+     * Check if there is still burning trees in the simulation.
+     * 
+     * @return
+     */
+    public Boolean isStillBurningTrees() {
+        try {
+            return simulation.getCurrentBurningTrees().length > 0;
+        } catch (IllegalStateException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check the 4 neighboors of a burning tree and try to ignite them if they are
+     * not.
+     *
+     * @param burningTree
+     * @param ash
+     * @param newBurningTrees
+     */
+    private void checkNeighboors(Tree burningTree, List<Tree> ash, List<Tree> newBurningTrees) {
+        int x = burningTree.getX();
+        int y = burningTree.getY();
+
+        // coordinates of the 4 neighboors
+        int[][] neighbors = {
+                { x - 1, y }, // left
+                { x + 1, y }, // right
+                { x, y - 1 }, // top
+                { x, y + 1 } // bottom
+        };
+
+        for (int[] neighbor : neighbors) {
+            int nx = neighbor[0];
+            int ny = neighbor[1];
+
+            // Check is the neighbor is within bounds
+            if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                boolean alreadyAsh = ash.stream().anyMatch(tree -> tree.getX() == nx && tree.getY() == ny);
+                boolean alreadyBurning = isBurning(nx, ny);
+
+                if (!alreadyAsh && !alreadyBurning) {
+                    if (tryIgnite(nx, ny)) {
+                        newBurningTrees.add(new Tree(nx, ny));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Try to ignite a tree at position (x, y) based on the contagion rate.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    private Boolean tryIgnite(int x, int y) {
+        double p = getContagionRate();
+        return (Math.random() < p);
     }
 
     public List<Tree> getAllBurnedTrees(ForestStates simulation) {
@@ -95,7 +175,7 @@ public class SimulationService {
                 .filter(step -> step != null)
                 .flatMap(step -> Arrays.stream(step))
                 .filter(Objects::nonNull)
-                .toList(); // Java 16+ (ou .collect(Collectors.toList()) en Java 8)
+                .toList();
     }
 
     /**

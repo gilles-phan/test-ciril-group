@@ -36,5 +36,10 @@ public class TestCirilGroupApplication implements CommandLineRunner {
 
         SimulationService simulationService = new SimulationService(config);
         simulationService.drawForest();
+        while (simulationService.isStillBurningTrees()) {
+            simulationService.nextStep();
+            simulationService.drawForest();
+        }
+
     }
 }
