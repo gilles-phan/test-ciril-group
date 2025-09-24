@@ -29,3 +29,33 @@ Ce qui nous intéresse n’est pas de simplement voir un programme de simulation
 - Comment vous codez
 - Quels sont vos choix architecturaux
 - Comment vous présentez votre travail une fois réalisé
+
+## Roadmap
+
+### V1 : mettre en place tout l’environnement de travail
+
+- Init projet spring
+- Mettre la doc
+
+### V2 : la config
+
+- Init et structurer le fichier de config
+
+### V3 : le simulateur
+
+- Init les modèles pour la simulation
+- TU
+- Écrire toute les fonctions vide (qui ne passeront pas les TU)
+- Implémentation -> les TU passent
+- On lance juste le main, et tout se déroule jusqu'à la fin
+- (bonus) On affiche potentiellement chaque état dans la console
+
+### V4 : incrémentation de l'état du simulateur
+
+- l'état courant est stocké dans la mémoire
+- ajouter la possibilité d'avancer état par état, et d'avoir un visuel sur le simulateur
+
+### V5 api rest + bdd
+
+- ajout d'un BDD pour persister l'état courant
+- mise en place d'une api rest qui incrémente et affiche l'état de la simulation en cours
