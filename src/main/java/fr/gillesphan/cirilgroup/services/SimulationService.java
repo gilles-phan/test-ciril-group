@@ -6,8 +6,6 @@ import fr.gillesphan.cirilgroup.utils.SimulationUtils;
 import fr.gillesphan.cirilgroup.model.BurningTree;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class SimulationService {
 
@@ -61,32 +59,6 @@ public class SimulationService {
     }
 
     /**
-     * Draw the forest in the console.
-     */
-    public void drawForest() {
-        System.out.println(
-                "Forest generation: #" + (simulation.getBurningTreesHistory().size() - 1));
-        for (int y = 0; y < getHeight(); y++) {
-            for (int x = 0; x < getWidth(); x++) {
-                try {
-                    if (SimulationUtils.isBurning(x, y, simulation)) {
-                        System.out.print("🔥 ");
-                    } else if (SimulationUtils.isAsh(x, y, simulation.getBurningTreesHistory())) {
-                        System.out.print("⚫ ");
-                    } else {
-                        System.out.print("🌲 ");
-                    }
-                } catch (IllegalStateException e) {
-                    System.err.println(e.getMessage());
-                    System.out.print("⚠️ ");
-                }
-
-            }
-            System.out.println();
-        }
-    }
-
-    /**
      * Generate the next step of the simulation.
      */
     public void nextStep() {
@@ -109,7 +81,7 @@ public class SimulationService {
     }
 
     /**
-     * Check if there is still burning trees in the simulation.
+     * Check if there is still burning trees inz the simulation.
      * 
      * @return
      */

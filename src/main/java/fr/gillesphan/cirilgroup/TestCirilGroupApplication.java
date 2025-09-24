@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gillesphan.cirilgroup.config.AppConfiguration;
+import fr.gillesphan.cirilgroup.services.SimulationPrinter;
 import fr.gillesphan.cirilgroup.services.SimulationService;
 import fr.gillesphan.cirilgroup.utils.SimulationUtils;
 
@@ -36,10 +37,13 @@ public class TestCirilGroupApplication implements CommandLineRunner {
         }
 
         SimulationService simulationService = new SimulationService(config);
-        simulationService.drawForest();
+        SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
+                simulationService.getHeight(), System.out);
+
         while (simulationService.isStillBurningTrees()) {
             simulationService.nextStep();
-            simulationService.drawForest();
+            SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
+                simulationService.getHeight(), System.out);
         }
 
     }
