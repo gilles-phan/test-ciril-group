@@ -6,8 +6,6 @@ import fr.gillesphan.cirilgroup.utils.SimulationUtils;
 import fr.gillesphan.cirilgroup.model.BurningTree;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class SimulationService {
 
@@ -60,7 +58,6 @@ public class SimulationService {
         this.contagionRate = contagionRate;
     }
 
-
     /**
      * Generate the next step of the simulation.
      */
@@ -84,7 +81,7 @@ public class SimulationService {
     }
 
     /**
-     * Check if there is still burning trees in the simulation.
+     * Check if there is still burning trees inz the simulation.
      * 
      * @return
      */

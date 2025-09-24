@@ -37,12 +37,12 @@ public class TestCirilGroupApplication implements CommandLineRunner {
         }
 
         SimulationService simulationService = new SimulationService(config);
-        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+        SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
                 simulationService.getHeight(), System.out);
 
         while (simulationService.isStillBurningTrees()) {
             simulationService.nextStep();
-            SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+            SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
                 simulationService.getHeight(), System.out);
         }
 

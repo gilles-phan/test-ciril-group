@@ -30,12 +30,13 @@ class SimulationServiceTest {
         System.setOut(new PrintStream(outContent));
 
         SimulationService simulationService = new SimulationService(config);
-        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+        SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
                 simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
-        String expected = "🌲 🌲 🌲 \n" +
+        String expected = "Forest generation: #0\n" +
+                "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n" +
                 "🔥 🌲 🌲 \n";
 
@@ -58,12 +59,13 @@ class SimulationServiceTest {
         System.setOut(new PrintStream(outContent));
 
         SimulationService simulationService = new SimulationService(config);
-        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+        SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
                 simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
-        String expected = "🌲 🌲 🌲 \n" +
+        String expected = "Forest generation: #0\n" +
+                "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n";
 
@@ -96,12 +98,13 @@ class SimulationServiceTest {
         System.setOut(new PrintStream(outContent));
 
         SimulationService simulationService = new SimulationService(config);
-        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+        SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
                 simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
-        String expected = "🔥 🔥 🔥 \n" +
+        String expected = "Forest generation: #0\n" +
+                "🔥 🔥 🔥 \n" +
                 "🔥 🔥 🔥 \n" +
                 "🔥 🔥 🔥 \n";
 
@@ -126,12 +129,13 @@ class SimulationServiceTest {
         System.setOut(new PrintStream(outContent));
 
         SimulationService simulationService = new SimulationService(config);
-        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+        SimulationPrinter.drawForest(simulationService.getSimulation(), simulationService.getWidth(),
                 simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
-        String expected = "🌲 🌲 🌲 \n" +
+        String expected = "Forest generation: #0\n" +
+                "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n";
 
