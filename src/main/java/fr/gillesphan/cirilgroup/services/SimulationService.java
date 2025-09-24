@@ -60,31 +60,6 @@ public class SimulationService {
         this.contagionRate = contagionRate;
     }
 
-    /**
-     * Draw the forest in the console.
-     */
-    public void drawForest() {
-        System.out.println(
-                "Forest generation: #" + (simulation.getBurningTreesHistory().size() - 1));
-        for (int y = 0; y < getHeight(); y++) {
-            for (int x = 0; x < getWidth(); x++) {
-                try {
-                    if (SimulationUtils.isBurning(x, y, simulation)) {
-                        System.out.print("🔥 ");
-                    } else if (SimulationUtils.isAsh(x, y, simulation.getBurningTreesHistory())) {
-                        System.out.print("⚫ ");
-                    } else {
-                        System.out.print("🌲 ");
-                    }
-                } catch (IllegalStateException e) {
-                    System.err.println(e.getMessage());
-                    System.out.print("⚠️ ");
-                }
-
-            }
-            System.out.println();
-        }
-    }
 
     /**
      * Generate the next step of the simulation.

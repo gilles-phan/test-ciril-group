@@ -29,7 +29,9 @@ class SimulationServiceTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        service.drawForest();
+        SimulationService simulationService = new SimulationService(config);
+        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+                simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
@@ -55,7 +57,9 @@ class SimulationServiceTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        service.drawForest();
+        SimulationService simulationService = new SimulationService(config);
+        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+                simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
@@ -91,7 +95,9 @@ class SimulationServiceTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        service.drawForest();
+        SimulationService simulationService = new SimulationService(config);
+        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+                simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
@@ -119,7 +125,9 @@ class SimulationServiceTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        service.drawForest();
+        SimulationService simulationService = new SimulationService(config);
+        SimulationPrinter.print(simulationService.getSimulation(), simulationService.getWidth(),
+                simulationService.getHeight(), System.out);
 
         System.setOut(System.out);
 
