@@ -51,11 +51,22 @@ public class ForestStates {
         burningTreesHistory.add(burningTrees);
     }
 
-    public Tree[] getCurrentBurningTrees() {
+    public Tree[] getCurrentBurningTrees() throws IllegalStateException {
         if (burningTreesHistory == null || burningTreesHistory.isEmpty()) {
-            return new Tree[0];
+            throw new IllegalStateException("No history available");
         }
         return burningTreesHistory.get(burningTreesHistory.size() - 1);
+    }
+
+    public Tree[] getPreviousBurningTrees() throws IllegalStateException {
+        if (burningTreesHistory.size() < 2) {
+            throw new IllegalStateException("No previous state available");
+        }
+        if (burningTreesHistory == null || burningTreesHistory.isEmpty()) {
+            throw new IllegalStateException("No history available");
+        }
+
+        return burningTreesHistory.get(burningTreesHistory.size() - 2);
     }
 
 }
