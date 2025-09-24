@@ -2,6 +2,7 @@ package fr.gillesphan.cirilgroup.services;
 
 import fr.gillesphan.cirilgroup.config.AppConfiguration;
 import fr.gillesphan.cirilgroup.model.ForestStates;
+import fr.gillesphan.cirilgroup.utils.SimulationUtils;
 import fr.gillesphan.cirilgroup.model.BurningTree;
 import java.util.List;
 import java.util.ArrayList;
@@ -68,9 +69,9 @@ public class SimulationService {
         for (int y = 0; y < getHeight(); y++) {
             for (int x = 0; x < getWidth(); x++) {
                 try {
-                    if (isBurning(x, y)) {
+                    if (SimulationUtils.isBurning(x, y, simulation)) {
                         System.out.print("🔥 ");
-                    } else if (isAsh(x, y)) {
+                    } else if (SimulationUtils.isAsh(x, y, simulation.getBurningTreesHistory())) {
                         System.out.print("⚫ ");
                     } else {
                         System.out.print("🌲 ");
@@ -89,7 +90,7 @@ public class SimulationService {
      */
     public void nextStep() {
         // 1 - get all ash
-        List<BurningTree> ash = getAllBurnedTrees(simulation);
+        List<BurningTree> ash = SimulationUtils.getAllBurnedTrees(simulation);
 
         // 2 - get currently burning trees
         BurningTree[] currentlyBurningTrees = simulation.getCurrentBurningTrees();
@@ -127,7 +128,8 @@ public class SimulationService {
      * @param ash
      * @param newBurningTrees
      */
-    private void checkNeighboors(BurningTree burningTree, List<BurningTree> ash, List<BurningTree> newBurningTrees) {
+    private void checkNeighboors(BurningTree burningTree, List<BurningTree> ash,
+            List<BurningTree> newBurningTrees) {
         int x = burningTree.getX();
         int y = burningTree.getY();
 
@@ -146,86 +148,14 @@ public class SimulationService {
             // Check is the neighbor is within bounds
             if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
                 boolean alreadyAsh = ash.stream().anyMatch(tree -> tree.getX() == nx && tree.getY() == ny);
-                boolean alreadyBurning = isBurning(nx, ny);
+                boolean alreadyBurning = SimulationUtils.isBurning(nx, ny, simulation);
 
                 if (!alreadyAsh && !alreadyBurning) {
-                    if (tryIgnite(nx, ny)) {
+                    if (Math.random() < contagionRate) {
                         newBurningTrees.add(new BurningTree(nx, ny));
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Try to ignite a tree at position (x, y) based on the contagion rate.
-     *
-     * @param x
-     * @param y
-     * @return
-     */
-    private Boolean tryIgnite(int x, int y) {
-        double p = getContagionRate();
-        return (Math.random() < p);
-    }
-
-    public List<BurningTree> getAllBurnedTrees(ForestStates simulation) {
-        return simulation.getBurningTreesHistory().stream()
-                .filter(step -> step != null)
-                .flatMap(step -> Arrays.stream(step))
-                .filter(Objects::nonNull)
-                .toList();
-    }
-
-    /**
-     * Check if a tree at position (x, y) is burning in the current step.
-     *
-     * @param x
-     * @param y
-     * @return
-     */
-    public boolean isBurning(int x, int y) throws IllegalStateException {
-        if (simulation.getBurningTreesHistory() == null || simulation.getBurningTreesHistory().isEmpty()) {
-            return false;
-        }
-
-        // get the current state of the forest and check if one of them is burning at
-        // (x, y)
-        BurningTree[] currentStep = simulation.getCurrentBurningTrees();
-        if (currentStep == null) {
-            return false;
-        }
-
-        for (BurningTree tree : currentStep) {
-            if (tree != null && tree.getX() == x && tree.getY() == y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Check if a tree at position (x, y) is ash in the current step.
-     *
-     * @param x
-     * @param y
-     * @return
-     */
-    public boolean isAsh(int x, int y) throws IllegalStateException {
-        if (simulation.getBurningTreesHistory() == null || simulation.getBurningTreesHistory().isEmpty()) {
-            return false;
-        }
-
-        // check all states of the forest and check if one of them as already burning at
-        // (x, y). Is yes, it is now ash.
-        ArrayList<BurningTree[]> history = simulation.getBurningTreesHistory();
-        if (history.size() <= 1)
-            return false;
-
-        return history.subList(0, history.size() - 1).stream()
-                .filter(Objects::nonNull)
-                .flatMap(Arrays::stream)
-                .anyMatch(tree -> tree != null && tree.getX() == x && tree.getY() == y);
-
     }
 }

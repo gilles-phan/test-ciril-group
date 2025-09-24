@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gillesphan.cirilgroup.config.AppConfiguration;
 import fr.gillesphan.cirilgroup.services.SimulationService;
+import fr.gillesphan.cirilgroup.utils.SimulationUtils;
 
 @SpringBootApplication
 public class TestCirilGroupApplication implements CommandLineRunner {
