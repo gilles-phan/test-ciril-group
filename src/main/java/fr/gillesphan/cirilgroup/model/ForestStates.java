@@ -13,52 +13,38 @@ public class ForestStates {
     /**
      * Initial state of the forest (only first BURNING trees).
      */
-    private ArrayList<Tree> forest;
+    private ArrayList<BurningTree> burningTrees;
     /**
      * History of burning trees (BURNING and ASH states).
      */
-    private ArrayList<Tree[]> burningTreesHistory;
+    private ArrayList<BurningTree[]> burningTreesHistory;
 
-    public ForestStates(Tree[] initialBurningTrees) {
-        this.forest = new ArrayList<Tree>();
-        List<Tree> burninTrees = Arrays.asList(burnAllTrees(initialBurningTrees));
-        this.forest.addAll(burninTrees);
-        this.burningTreesHistory = new ArrayList<Tree[]>();
+    public ForestStates(BurningTree[] initialBurningTrees) {
+        this.burningTrees = new ArrayList<BurningTree>();
+        this.burningTrees.addAll(Arrays.asList(initialBurningTrees));
+        this.burningTreesHistory = new ArrayList<BurningTree[]>();
         this.burningTreesHistory.add(initialBurningTrees);
     }
 
-    /**
-     * Set all trees to BURNING state.
-     *
-     * @param trees
-     * @return
-     */
-    private Tree[] burnAllTrees(Tree[] trees) {
-        for (int i = 0; i < trees.length; i++) {
-            trees[i].setState(TreeState.BURNING);
-        }
-        return trees;
-    }
-
-    public ArrayList<Tree[]> getBurningTreesHistory() {
+    public ArrayList<BurningTree[]> getBurningTreesHistory() {
         return burningTreesHistory;
     }
 
-    public void addBurningTreesToHistory(Tree[] burningTrees) {
+    public void addBurningTreesToHistory(BurningTree[] burningTrees) {
         if (burningTreesHistory == null) {
-            burningTreesHistory = new ArrayList<Tree[]>();
+            burningTreesHistory = new ArrayList<BurningTree[]>();
         }
         burningTreesHistory.add(burningTrees);
     }
 
-    public Tree[] getCurrentBurningTrees() throws IllegalStateException {
+    public BurningTree[] getCurrentBurningTrees() throws IllegalStateException {
         if (burningTreesHistory == null || burningTreesHistory.isEmpty()) {
             throw new IllegalStateException("No history available");
         }
         return burningTreesHistory.get(burningTreesHistory.size() - 1);
     }
 
-    public Tree[] getPreviousBurningTrees() throws IllegalStateException {
+    public BurningTree[] getPreviousBurningTrees() throws IllegalStateException {
         if (burningTreesHistory.size() < 2) {
             throw new IllegalStateException("No previous state available");
         }

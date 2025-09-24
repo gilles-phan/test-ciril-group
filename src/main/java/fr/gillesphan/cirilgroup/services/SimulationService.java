@@ -2,8 +2,7 @@ package fr.gillesphan.cirilgroup.services;
 
 import fr.gillesphan.cirilgroup.config.AppConfiguration;
 import fr.gillesphan.cirilgroup.model.ForestStates;
-import fr.gillesphan.cirilgroup.model.Tree;
-import fr.gillesphan.cirilgroup.model.TreeState;
+import fr.gillesphan.cirilgroup.model.BurningTree;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +20,9 @@ public class SimulationService {
         this.height = config.getHeight();
         this.contagionRate = config.getContagionRate();
 
-        Tree[] initialBurningTrees = config.getStartFirePositions().stream()
-                .map(pos -> new Tree(pos.getX(), pos.getY()))
-                .toArray(Tree[]::new);
+        BurningTree[] initialBurningTrees = config.getStartFirePositions().stream()
+                .map(pos -> new BurningTree(pos.getX(), pos.getY()))
+                .toArray(BurningTree[]::new);
 
         this.simulation = new ForestStates(initialBurningTrees);
     }
@@ -90,17 +89,17 @@ public class SimulationService {
      */
     public void nextStep() {
         // 1 - get all ash
-        List<Tree> ash = getAllBurnedTrees(simulation);
+        List<BurningTree> ash = getAllBurnedTrees(simulation);
 
         // 2 - get currently burning trees
-        Tree[] currentlyBurningTrees = simulation.getCurrentBurningTrees();
+        BurningTree[] currentlyBurningTrees = simulation.getCurrentBurningTrees();
 
         // 3 - for each burning tree, try to ignite its neighboors
-        List<Tree> newBurningTrees = new ArrayList<Tree>();
-        for (Tree burningTree : currentlyBurningTrees) {
+        List<BurningTree> newBurningTrees = new ArrayList<BurningTree>();
+        for (BurningTree burningTree : currentlyBurningTrees) {
             checkNeighboors(burningTree, ash, newBurningTrees);
         }
-        Tree[] newBurningTreesArray = new Tree[newBurningTrees.size()];
+        BurningTree[] newBurningTreesArray = new BurningTree[newBurningTrees.size()];
         newBurningTreesArray = newBurningTrees.toArray(newBurningTreesArray);
 
         // 4 - transform all currently burning trees to ash
@@ -128,7 +127,7 @@ public class SimulationService {
      * @param ash
      * @param newBurningTrees
      */
-    private void checkNeighboors(Tree burningTree, List<Tree> ash, List<Tree> newBurningTrees) {
+    private void checkNeighboors(BurningTree burningTree, List<BurningTree> ash, List<BurningTree> newBurningTrees) {
         int x = burningTree.getX();
         int y = burningTree.getY();
 
@@ -151,7 +150,7 @@ public class SimulationService {
 
                 if (!alreadyAsh && !alreadyBurning) {
                     if (tryIgnite(nx, ny)) {
-                        newBurningTrees.add(new Tree(nx, ny));
+                        newBurningTrees.add(new BurningTree(nx, ny));
                     }
                 }
             }
@@ -170,7 +169,7 @@ public class SimulationService {
         return (Math.random() < p);
     }
 
-    public List<Tree> getAllBurnedTrees(ForestStates simulation) {
+    public List<BurningTree> getAllBurnedTrees(ForestStates simulation) {
         return simulation.getBurningTreesHistory().stream()
                 .filter(step -> step != null)
                 .flatMap(step -> Arrays.stream(step))
@@ -192,12 +191,12 @@ public class SimulationService {
 
         // get the current state of the forest and check if one of them is burning at
         // (x, y)
-        Tree[] currentStep = simulation.getCurrentBurningTrees();
+        BurningTree[] currentStep = simulation.getCurrentBurningTrees();
         if (currentStep == null) {
             return false;
         }
 
-        for (Tree tree : currentStep) {
+        for (BurningTree tree : currentStep) {
             if (tree != null && tree.getX() == x && tree.getY() == y) {
                 return true;
             }
@@ -219,7 +218,7 @@ public class SimulationService {
 
         // check all states of the forest and check if one of them as already burning at
         // (x, y). Is yes, it is now ash.
-        ArrayList<Tree[]> history = simulation.getBurningTreesHistory();
+        ArrayList<BurningTree[]> history = simulation.getBurningTreesHistory();
         if (history.size() <= 1)
             return false;
 

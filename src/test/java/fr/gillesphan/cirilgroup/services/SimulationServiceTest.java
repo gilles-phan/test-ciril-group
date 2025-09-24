@@ -3,7 +3,6 @@ package fr.gillesphan.cirilgroup.services;
 import fr.gillesphan.cirilgroup.config.AppConfiguration;
 import fr.gillesphan.cirilgroup.config.FirePosition;
 import fr.gillesphan.cirilgroup.model.ForestStates;
-import fr.gillesphan.cirilgroup.model.Tree;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
