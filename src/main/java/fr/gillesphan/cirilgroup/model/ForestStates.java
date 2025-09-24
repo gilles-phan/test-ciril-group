@@ -23,6 +23,8 @@ public class ForestStates {
         this.forest = new ArrayList<Tree>();
         List<Tree> burninTrees = Arrays.asList(burnAllTrees(initialBurningTrees));
         this.forest.addAll(burninTrees);
+        this.burningTreesHistory = new ArrayList<Tree[]>();
+        this.burningTreesHistory.add(initialBurningTrees);
     }
 
     /**
@@ -36,6 +38,24 @@ public class ForestStates {
             trees[i].setState(TreeState.BURNING);
         }
         return trees;
+    }
+
+    public ArrayList<Tree[]> getBurningTreesHistory() {
+        return burningTreesHistory;
+    }
+
+    public void addBurningTreesToHistory(Tree[] burningTrees) {
+        if (burningTreesHistory == null) {
+            burningTreesHistory = new ArrayList<Tree[]>();
+        }
+        burningTreesHistory.add(burningTrees);
+    }
+
+    public Tree[] getCurrentBurningTrees() {
+        if (burningTreesHistory == null || burningTreesHistory.isEmpty()) {
+            return new Tree[0];
+        }
+        return burningTreesHistory.get(burningTreesHistory.size() - 1);
     }
 
 }

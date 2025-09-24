@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import fr.gillesphan.cirilgroup.config.AppConfiguration;
+import fr.gillesphan.cirilgroup.services.SimulationService;
 
 @SpringBootApplication
 public class TestCirilGroupApplication implements CommandLineRunner {
@@ -33,5 +34,7 @@ public class TestCirilGroupApplication implements CommandLineRunner {
             throw new IllegalArgumentException("Contagion rate must be between 0 and 1.");
         }
 
+        SimulationService simulationService = new SimulationService(config);
+        simulationService.drawForest();
     }
 }
