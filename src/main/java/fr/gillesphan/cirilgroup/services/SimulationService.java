@@ -4,6 +4,10 @@ import fr.gillesphan.cirilgroup.config.AppConfiguration;
 import fr.gillesphan.cirilgroup.model.ForestStates;
 import fr.gillesphan.cirilgroup.model.Tree;
 import fr.gillesphan.cirilgroup.model.TreeState;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class SimulationService {
 
@@ -69,6 +73,30 @@ public class SimulationService {
         }
     }
 
+    public void nextStep() {
+        // 1 - get all ash
+        List<Tree> ash = getAllBurnedTrees(simulation);
+
+        // 2 - get currently burning trees
+        Tree[] currentlyBurningTrees = simulation.getCurrentBurningTrees();
+
+        // 3 - for each burning tree, try to set to burning the 4 adjacent trees if not
+        // ash
+        // TODO : à terminer après avoir manger
+        Tree[] newBurningTrees = new Tree[0];
+
+        // 4 - set all currently burning trees to ash
+        simulation.addBurningTreesToHistory(newBurningTrees);
+    }
+
+    public List<Tree> getAllBurnedTrees(ForestStates simulation) {
+        return simulation.getBurningTreesHistory().stream()
+                .filter(step -> step != null)
+                .flatMap(step -> Arrays.stream(step))
+                .filter(Objects::nonNull)
+                .toList(); // Java 16+ (ou .collect(Collectors.toList()) en Java 8)
+    }
+
     /**
      * Check if a tree at position (x, y) is burning in the current step.
      *
@@ -108,18 +136,16 @@ public class SimulationService {
             return false;
         }
 
-        // get the previous state of the forest and check if one of them was burning at
+        // check all states of the forest and check if one of them as already burning at
         // (x, y). Is yes, it is now ash.
-        Tree[] currentStep = simulation.getPreviousBurningTrees();
-        if (currentStep == null) {
+        ArrayList<Tree[]> history = simulation.getBurningTreesHistory();
+        if (history.size() <= 1)
             return false;
-        }
 
-        for (Tree tree : currentStep) {
-            if (tree != null && tree.getX() == x && tree.getY() == y) {
-                return true;
-            }
-        }
-        return false;
+        return history.subList(0, history.size() - 1).stream()
+                .filter(Objects::nonNull)
+                .flatMap(Arrays::stream)
+                .anyMatch(tree -> tree != null && tree.getX() == x && tree.getY() == y);
+
     }
 }
