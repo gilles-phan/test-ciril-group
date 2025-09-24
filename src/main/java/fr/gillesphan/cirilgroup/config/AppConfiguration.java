@@ -1,4 +1,4 @@
-package fr.gillesphan.cirilgroup.test.cg.config;
+package fr.gillesphan.cirilgroup.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

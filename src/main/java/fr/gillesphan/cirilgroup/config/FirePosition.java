@@ -1,4 +1,4 @@
-package fr.gillesphan.cirilgroup.test.cg.config;
+package fr.gillesphan.cirilgroup.config;
 
 public class FirePosition {
     private int x;
