@@ -1,4 +1,4 @@
-package fr.gillesphan.cirilgroup.test.test_ciril_group;
+package fr.gillesphan.cirilgroup.test.cg;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
