@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>fr.gillesphan.cirilgroup.test</groupId>
 	<artifactId>test-ciril-group</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<name>Test Technique Ciril Group</name>
 	<description>Test technique de feu de forêt pour Ciril Group</description>
 	<url />
@@ -31,6 +31,10 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

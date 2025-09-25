@@ -11,17 +11,11 @@ import java.util.List;
  * In future versions, this class will be a bean and configuration will be
  * stored in database.
  */
-@Component
 @ConfigurationProperties(prefix = "cg")
 public class AppConfiguration {
 
     private int width;
     private int height;
-    /**
-     * To delete ?
-     * 
-     * @deprecated not used
-     */
     private List<FirePosition> startFirePositions;
     private double contagionRate;
 

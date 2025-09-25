@@ -40,7 +40,6 @@ class SimulationServiceTest {
                 "🌲 🌲 🌲 \n" +
                 "🔥 🌲 🌲 \n";
 
-        // Vérifie que ça matche
         assertThat(outContent.toString()).isEqualTo(expected);
     }
 
@@ -69,7 +68,6 @@ class SimulationServiceTest {
                 "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n";
 
-        // Vérifie que ça matche
         assertThat(outContent.toString()).isEqualTo(expected);
     }
 
@@ -108,7 +106,6 @@ class SimulationServiceTest {
                 "🔥 🔥 🔥 \n" +
                 "🔥 🔥 🔥 \n";
 
-        // Vérifie que ça matche
         assertThat(outContent.toString()).isEqualTo(expected);
     }
 
@@ -139,7 +136,6 @@ class SimulationServiceTest {
                 "🌲 🌲 🌲 \n" +
                 "🌲 🌲 🌲 \n";
 
-        // Vérifie que ça matche
         assertThat(outContent.toString()).isEqualTo(expected);
     }
 }
