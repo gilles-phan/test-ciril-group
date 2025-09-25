@@ -52,7 +52,12 @@ Ce qui nous intéresse n’est pas de simplement voir un programme de simulation
 - ajouter la possibilité d'avancer état par état, et d'avoir un visuel sur le simulateur
 - (bonus) On affiche potentiellement chaque état dans la console
 
-### V4 api rest + bdd
+### V4 api rest
 
-- ajout d'un BDD pour persister l'état courant
 - mise en place d'une api rest qui incrémente et affiche l'état de la simulation en cours
+- accessible via /simulation
+- ui: http://viewer.gils.xyz/ciril-group
+
+### V5 persistance
+- ajout d'un BDD pour persister l'état courant
+- pouvoir rejouer une simulation via l'id
